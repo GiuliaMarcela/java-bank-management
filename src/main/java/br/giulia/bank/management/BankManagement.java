@@ -27,33 +27,34 @@ public class BankManagement {
             System.out.println("Informe o seu CPF");
             String cpf = sc.nextLine();
 
-            do {
-                if (!isValid(cpf)) {
-                    System.out.println("""
-                            CPF com formato inválido!
-                            Formatos suportados são:
-                              - 12345678912
-                              - 123.456.789-12
-                            Encerrando o programa.""");
-                    return;
-                }
+            if (!isValid(cpf)) {
+                System.out.println("""
+                        CPF com formato inválido!
+                        Formatos suportados são:
+                          - 12345678912
+                          - 123.456.789-12
+                        Encerrando o programa.""");
+                return;
+            }
 
-                Account currAccount = new Account(name, cpf);
+            Account currAccount = new Account(name, cpf);
+
+            do {
                 Option selectedOption = displayMenuAndGetOption(sc);
 
                 switch (selectedOption) {
-                    case CONSULTAR_SALDO -> currAccount.showBalance();
-                    case REALIZAR_DEPOSITO -> {
+                    case CHECK_BALANCE -> currAccount.showBalance();
+                    case MAKE_DEPOSIT -> {
                         System.out.println("Digite o valor a depositar: ");
                         BigDecimal depositValue = sc.nextBigDecimal();
                         currAccount.deposit(depositValue);
                     }
-                    case REALIZAR_SAQUE -> {
+                    case MAKE_WITHDRAWAL -> {
                         System.out.println("Digite o valor a sacar: ");
                         BigDecimal withdrawValue = sc.nextBigDecimal();
                         currAccount.withdraw(withdrawValue);
                     }
-                    case SAIR -> {
+                    case EXIT -> {
                         running = false;
                         System.out.println("Encerrando a aplicação. Obrigada!");
                     }
@@ -75,7 +76,7 @@ public class BankManagement {
     public static Option displayMenuAndGetOption(Scanner sc) {
         System.out.println("Escolha uma opção:");
         for (Option option : Option.values()) {
-            System.out.println(option.getValue() + " - " + option.name().replace("_", " "));
+            System.out.println(option.getValue() + " - " + option.getLabel());
         }
 
         int optionValue = sc.nextInt();
@@ -83,15 +84,17 @@ public class BankManagement {
     }
 
     public enum Option {
-        CONSULTAR_SALDO(1),
-        REALIZAR_DEPOSITO(2),
-        REALIZAR_SAQUE(3),
-        SAIR(4);
+        CHECK_BALANCE(1, "Consultar Saldo"),
+        MAKE_DEPOSIT(2, "Realizar Depósito"),
+        MAKE_WITHDRAWAL(3, "Realizar Saque"),
+        EXIT(4, "Sair");
 
         private final int value;
+        private final String label;
 
-        Option(int value) {
+        Option(int value, String label) {
             this.value = value;
+            this.label = label;
         }
 
         public static Option getByValue(int value) {
@@ -106,6 +109,10 @@ public class BankManagement {
 
         public int getValue() {
             return value;
+        }
+
+        public String getLabel() {
+            return label;
         }
     }
 
@@ -127,7 +134,7 @@ public class BankManagement {
 
         public void showBalance() {
             System.out.println("Olá " + this.name);
-            System.out.println("Saldo atual: R$ " + this.balance);
+            System.out.printf("Saldo atual: R$ %.2f%n", this.balance);
         }
 
         public void deposit(BigDecimal amount) {
