@@ -27,3 +27,4 @@ replay_pid*
 /bank-management/target/
 .idea
 *.iml
+.DS_Store
