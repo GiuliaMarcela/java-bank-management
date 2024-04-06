@@ -5,7 +5,9 @@
 package br.giulia.bank.management;
 
 import java.math.BigDecimal;
+import java.util.InputMismatchException;
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
 /**
  * @author giulia
@@ -13,57 +15,76 @@ import java.util.Scanner;
 public class BankManagement {
 
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        boolean running = true;
+        try (Scanner sc = new Scanner(System.in)) {
+            boolean running = true;
 
-        System.out.println("Bem-vindo(a) ao Unopar Benqui");
+            System.out.println("Bem-vindo(a) ao Unopar Benqui");
 
-        System.out.println("Informe o seu nome");
-        String name = sc.nextLine();
+            System.out.println("Informe o seu nome");
+            String name = sc.nextLine();
 
-        System.out.println("Informe o seu CPF");
-        String cpf = sc.nextLine();
+            System.out.println("Informe o seu CPF");
+            String cpf = sc.nextLine();
 
-        Account currAccount = new Account(name, cpf);
+            do {
+                if (!isValid(cpf)) {
+                    System.out.println("CPF inválido. Tipos suportados são: 12345678912 ou 123.456.789-12");
+                    System.out.println("Encerrando o programa");
+                    return;
+                }
 
-        do {
-            System.out.println("\nEscolha uma opção:");
-            System.out.println("1 - Consultar Saldo");
-            System.out.println("2 - Realizar Depósito");
-            System.out.println("3 - Realizar Saque");
-            System.out.println("4 - Encerrar");
+                Account currAccount = new Account(name, cpf);
 
-            System.out.println("Opção escolhida: ");
-            int option = sc.nextInt();
+                System.out.println("Escolha uma opção:");
+                System.out.println("1 - Consultar Saldo");
+                System.out.println("2 - Realizar Depósito");
+                System.out.println("3 - Realizar Saque");
+                System.out.println("4 - Encerrar");
 
-            switch (option) {
-                case 1:
-                    currAccount.showBalance();
-                    break;
-                case 2:
-                    System.out.print("Digite o valor a depositar: ");
-                    BigDecimal depositValue = new BigDecimal(sc.next());
-                    currAccount.deposit(depositValue);
-                    break;
-                case 3:
-                    System.out.print("Digite o valor a sacar: ");
-                    BigDecimal withdrawValue = new BigDecimal(sc.next());
-                    currAccount.withdraw(withdrawValue);
-                    break;
-                case 4:
-                    running = false;
-                    System.out.println("Encerrando a aplicação. Obrigada!");
-                    sc.close();
-                    break;
-                default:
-                    System.out.println("Opção inválida. Tente novamente.");
-                    sc.close();
-                    break;
-            }
-        } while (running);
+                System.out.println("Opção escolhida: ");
+                int option;
+
+                try {
+                    option = sc.nextInt();
+                } catch (InputMismatchException e) {
+                    System.out.println("Opção inválida! Tente novamente.");
+                    sc.nextLine();
+                    continue;
+                }
+
+                switch (option) {
+                    case 1:
+                        currAccount.showBalance();
+                        break;
+                    case 2:
+                        System.out.println("Digite o valor a depositar: ");
+                        BigDecimal depositValue = sc.nextBigDecimal();
+                        currAccount.deposit(depositValue);
+                        break;
+                    case 3:
+                        System.out.println("Digite o valor a sacar: ");
+                        BigDecimal withdrawValue = sc.nextBigDecimal();
+                        currAccount.withdraw(withdrawValue);
+                        break;
+                    case 4:
+                        running = false;
+                        System.out.println("Encerrando a aplicação. Obrigada!");
+                        break;
+                    default:
+                        System.out.println("Opção inexistente. Tente novamente.");
+                        break;
+                }
+            } while (running);
+        }
     }
 
-    protected static class Account {
+    public static boolean isValid(String cpf) {
+        Pattern pattern = Pattern.compile("\\b\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}\\b|\\b\\d{11}\\b");
+
+        return pattern.matcher(cpf).matches();
+    }
+
+    public static class Account {
         private final String name;
         private final String cpf;
         private BigDecimal balance;
@@ -80,8 +101,8 @@ public class BankManagement {
         }
 
         public void showBalance() {
-            System.out.printf("Olá %s! %n", this.name);
-            System.out.printf("%n O saldo atual é %s", this.balance);
+            System.out.println("Olá " + this.name);
+            System.out.println("O saldo atual é " + this.balance);
         }
 
         public void deposit(BigDecimal amount) {
@@ -92,14 +113,14 @@ public class BankManagement {
 
             System.out.println("Por favor, aguarde.. Estamos realizando o depósito!");
             this.balance = this.balance.add(amount);
-            System.out.printf("O depósito de R$ %s foi realizado com sucesso.", amount);
+            System.out.printf("O depósito de R$ %s foi realizado com sucesso.%n", amount);
             showBalance();
         }
 
         public void withdraw(BigDecimal amount) {
             if (amount.compareTo(BigDecimal.ZERO) > 0 && amount.compareTo(this.balance) <= 0) {
                 this.balance = this.balance.subtract(amount);
-                System.out.printf("O saque de R$ %s foi realizado com sucesso.", amount);
+                System.out.printf("O saque de R$ %s foi realizado com sucesso.%n", amount);
                 showBalance();
                 return;
             }
