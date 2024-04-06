@@ -8,6 +8,8 @@ import java.math.BigDecimal;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
+import static java.lang.System.exit;
+
 /**
  * @author giulia
  */
@@ -58,6 +60,9 @@ public class BankManagement {
                     default -> System.out.println("Opção inexistente. Tente novamente.");
                 }
             } while (running);
+        } catch (IllegalArgumentException exception) {
+            System.out.println(exception.getMessage());
+            exit(1);
         }
     }
 
