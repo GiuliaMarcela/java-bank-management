@@ -10,16 +10,16 @@ Utilizando os principais conceitos do paradigma de Orientação a Objetos, crie 
 bancário que possibilite ao usuário informar seu nome, sobrenome e CPF.
 
 Além disso, a aplicação deverá possibilitar ao
-usuário consultar saldo, realizar depositos e saques. Esses procedimentos devem se repetir até que o usuário escolha
+usuário consultar saldo, realizar depósitos e saques. Esses procedimentos devem se repetir até que o usuário escolha
 encerrar o uso da aplicação.
 
-- Contrua a aplicação em um único arquivo java
+- Construa a aplicação em um único arquivo java
 - No arquivo criado, você deverá construir:
     - A classe principal
     - Classe para dados pessoais e operações bancárias
     - Método para exibição do menu
 - Exibição de um menu com opções para consulta de saldo, depósito, retirada e encerramento da aplicação.
-- Utilização de estruturas de decisão (switch...case, do...while) para tratar as escolhas do usuário.
+- Utilização de estruturas de decisão (switch… case, do… while) para tratar as escolhas do usuário.
 - Encerramento da execução da aplicação com uma mensagem de despedida.
 
 ### Checklist
@@ -33,18 +33,20 @@ encerrar o uso da aplicação.
 
 ### Estrutura do Projeto
 
-![Captura de tela da IDE Apache NetBeans com o console expandido, exibindo as mensagens de saída da aplicação e realização de um depósito de 100 reais](./assets/images/net-beans-application.png)
+![Captura de tela da IDE Apache NetBeans com o console expandido, exibindo as mensagens de saída da aplicação e realização de um depósito de 100 reais](.github/assets/images/net-beans-application.png)
 
 O projeto Java Application contém os seguintes arquivos:
 
 - [BankManagement](./src/main/java/br/giulia/bank/management/BankManagement.java): Projeto principal que contém o
   arquivo principal contendo main e a lógica da aplicação.
-- [README.md](README.md): Documentação do projeto.
+- [README.md](README.md): documentação do projeto.
 
 ### Tecnologias utilizadas
 
 - Java 21
 - Apache NetBeans IDE
+- JUnit 5
+- GitHub Actions
 
 ### Como usar
 
@@ -69,5 +71,5 @@ configurar e executar a aplicação:
     - Escolha a opção desejada digitando o número correspondente no console e pressionando Enter.
     - Siga as instruções no console para inserir valores para depósito, saque, etc., quando solicitado.
 
-Ao seguir esses passos, você será capaz de configurar, compilar e executar a aplicação de gerenciamento bancário em Java
+Ao seguir esses passos, você conseguirá configurar, compilar e executar a aplicação de gerenciamento bancário em Java
 conforme descrito no README.
