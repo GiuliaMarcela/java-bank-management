@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- */
-
 package br.giulia.bank.management;
 
 import java.math.BigDecimal;
@@ -11,8 +7,12 @@ import java.util.regex.Pattern;
 import static java.lang.System.exit;
 
 /**
- * @author giulia
+ * Classe desenvolvida para obtenção de nota para a disciplina de Linguagem Orientada a Objetos
+ *
+ * @author Giulia Marcela Mendes de Arruda
+ * @version 1.0
  */
+@SuppressWarnings("java:S106") // disable warning from sonarlint
 public class BankManagement {
 
     public static void main(String[] args) {
@@ -24,10 +24,17 @@ public class BankManagement {
             System.out.println("Informe o seu nome");
             String name = sc.nextLine();
 
+            if (!isNameValid(name)) {
+                System.out.println("""
+                        O nome é um campo obrigatório!
+                        Encerrando o programa.""");
+                return;
+            }
+
             System.out.println("Informe o seu CPF");
             String cpf = sc.nextLine();
 
-            if (!isValid(cpf)) {
+            if (!isCPFValid(cpf)) {
                 System.out.println("""
                         CPF com formato inválido!
                         Formatos suportados são:
@@ -40,7 +47,8 @@ public class BankManagement {
             Account currAccount = new Account(name, cpf);
 
             do {
-                Option selectedOption = displayMenuAndGetOption(sc);
+                displayMenu();
+                Option selectedOption = getSelectedOption(sc);
 
                 switch (selectedOption) {
                     case CHECK_BALANCE -> currAccount.showBalance();
@@ -67,20 +75,25 @@ public class BankManagement {
         }
     }
 
-    public static boolean isValid(String cpf) {
+    public static boolean isCPFValid(String cpf) {
         Pattern pattern = Pattern.compile("\\b\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}\\b|\\b\\d{11}\\b");
-
         return pattern.matcher(cpf).matches();
     }
 
-    public static Option displayMenuAndGetOption(Scanner sc) {
+    public static boolean isNameValid(String name) {
+        return !name.isEmpty() && !name.isBlank();
+    }
+
+    public static Option getSelectedOption(Scanner sc) {
+        int optionValue = sc.nextInt();
+        return Option.getByValue(optionValue);
+    }
+
+    public static void displayMenu() {
         System.out.println("Escolha uma opção:");
         for (Option option : Option.values()) {
             System.out.println(option.getValue() + " - " + option.getLabel());
         }
-
-        int optionValue = sc.nextInt();
-        return Option.getByValue(optionValue);
     }
 
     public enum Option {
@@ -158,6 +171,18 @@ public class BankManagement {
             }
 
             System.out.println("Não foi possível completar esta ação. Saldo insuficiente.");
+        }
+
+        public BigDecimal getBalance() {
+            return balance;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public String getCpf() {
+            return cpf;
         }
     }
 }
