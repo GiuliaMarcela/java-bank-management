@@ -1,5 +1,7 @@
 # Bank Management
 
+![badge github actions](https://github.com/GiuliaMarcela/java-bank-management/actions/workflows/run-tests.yaml/badge.svg)
+
 Este projeto consiste na criação de uma aplicação Java para gerenciamento bancário, implementada em um único arquivo
 Java
 (main class), como proposto no enunciado da disciplina de Linguagem Orientada a Objetos.
@@ -37,8 +39,10 @@ encerrar o uso da aplicação.
 
 O projeto Java Application contém os seguintes arquivos:
 
-- [BankManagement](./src/main/java/br/giulia/bank/management/BankManagement.java): Projeto principal que contém o
-  arquivo principal contendo main e a lógica da aplicação.
+- [BankManagement](./src/main/java/br/giulia/bank/management/BankManagement.java): classe principal que contém a main e
+  a lógica da aplicação.
+- [BankManagementTest](./src/test/java/br/giulia/bank/management/BankManagementTest.java): classe principal dos testes
+  unitários
 - [README.md](README.md): documentação do projeto.
 
 ### Tecnologias utilizadas
@@ -56,20 +60,31 @@ configurar e executar a aplicação:
 #### Pré-requisitos
 
 - Java Development Kit 21
+- Maven
 - IDE Java, como o NetBeans, Eclipse ou IntelliJ IDEA, instalada em seu sistema para facilitar o desenvolvimento e
   execução do código.
+- Clonar este repositório
 
-#### Passos para execução
+#### Execução
 
-1. Clone este repositório em sua máquina
-2. Abra o projeto na IDE de sua preferência
-3. Localize o arquivo `BankManagement.java`, abra-o e clique em "Run" na barra de ferramentas ou menu de contexto da sua
-   IDE.
-4. Quando a aplicação iniciar, siga as instruções no console para inserir seu nome, sobrenome e CPF.
-    - Após inserir seus dados, um menu será exibido com opções como consulta de saldo, depósito, retirada e encerramento
-      da aplicação.
-    - Escolha a opção desejada digitando o número correspondente no console e pressionando Enter.
-    - Siga as instruções no console para inserir valores para depósito, saque, etc., quando solicitado.
+- **Forma 1**
+  - Abra o projeto na IDE de sua preferência
+  - Localize o arquivo `BankManagement.java` e abra-o
+  - Clique em "Run" na barra de ferramentas ou menu de contexto da sua IDE
+  - Quando a aplicação iniciar, siga as instruções no console, como: insira seu nome, cpf, etc.
+- **Forma 2**
+  - Em um terminal aberto na pasta clonada do projeto
+  - Execute o comando `mvn clean install`
+  - Quando realizar o install com sucesso, aparecerá algo como "BUILD SUCCESS"
+  - Para executar a aplicação, execute o comando `java -jar target/java-bank-management-1.0-SNAPSHOT.jar`
+  - Siga as instruções no console
 
 Ao seguir esses passos, você conseguirá configurar, compilar e executar a aplicação de gerenciamento bancário em Java
 conforme descrito no README.
+
+## Referências
+
+- [BigDecimal compareTo() Function in Java](https://www.geeksforgeeks.org/bigdecimal-compareto-function-in-java/)
+- [How to capture and store console output, System.out.println()](https://openwritings.net/pg/java/how-capture-and-store-console-output-systemoutprintln)
+- [Assert an Exception Is Thrown in JUnit 4 and 5](https://www.baeldung.com/junit-assert-exception)
+- [How to Create an Executable JAR with Maven](https://www.baeldung.com/executable-jar-with-maven)
