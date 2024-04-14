@@ -150,7 +150,7 @@ public class BankManagement {
 
         @Override
         public String toString() {
-            return String.format("{ %n \"name\": \"%s\",%n \"cpf\": \"%s\",%n \"balance\": %s %n}", this.name, this.cpf, this.balance);
+            return String.format("{ %n \"name\": \"%s\",%n \"lastname\": \"%s\", %n \"cpf\": \"%s\",%n \"balance\": %s %n}", this.name, this.lastname, this.cpf, this.balance);
         }
 
         public void showBalance() {
