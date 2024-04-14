@@ -28,6 +28,14 @@ public class BankManagement {
                 System.out.println("O nome é um campo obrigatório! Encerrando o programa.");
                 return;
             }
+            
+            System.out.println("Informe o seu sobrenome");
+            String lastname = sc.nextLine();
+
+            if (!isNameValid(lastname)) {
+                System.out.println("O sobrenome é um campo obrigatório! Encerrando o programa.");
+                return;
+            }
 
             System.out.println("Informe o seu CPF");
             String cpf = sc.nextLine();
@@ -42,7 +50,7 @@ public class BankManagement {
                 return;
             }
 
-            Account currAccount = new Account(name, cpf);
+            Account currAccount = new Account(name, lastname, cpf);
 
             do {
                 displayMenu();
@@ -129,11 +137,13 @@ public class BankManagement {
 
     public static class Account {
         private final String name;
+        private final String lastname;
         private final String cpf;
         private BigDecimal balance;
 
-        public Account(String name, String cpf) {
+        public Account(String name, String lastname, String cpf) {
             this.name = name;
+            this.lastname = lastname;
             this.cpf = cpf;
             this.balance = BigDecimal.ZERO;
         }
@@ -144,7 +154,7 @@ public class BankManagement {
         }
 
         public void showBalance() {
-            System.out.println("Olá " + this.name);
+            System.out.printf("%nOlá %s %s!%n", this.name, this.lastname);
             System.out.printf("Saldo atual: R$ %.2f%n", this.balance);
         }
 
@@ -177,6 +187,10 @@ public class BankManagement {
 
         public String getName() {
             return name;
+        }
+        
+        public String getLastname() {
+            return lastname;
         }
 
         public String getCpf() {
