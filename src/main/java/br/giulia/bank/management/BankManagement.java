@@ -25,9 +25,7 @@ public class BankManagement {
             String name = sc.nextLine();
 
             if (!isNameValid(name)) {
-                System.out.println("""
-                        O nome é um campo obrigatório!
-                        Encerrando o programa.""");
+                System.out.println("O nome é um campo obrigatório! Encerrando o programa.");
                 return;
             }
 
