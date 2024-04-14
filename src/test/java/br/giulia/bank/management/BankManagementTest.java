@@ -21,7 +21,7 @@ class BankManagementTest {
         @Test
         @DisplayName("Validar conta com saldo inicial quando realizar depósito positivo o saldo deve aumentar")
         void givenAccountWithInitialBalance_whenDepositPositiveAmount_thenBalanceIncreases() {
-            BankManagement.Account account = new BankManagement.Account("Alice", "12345678912");
+            BankManagement.Account account = new BankManagement.Account("Alice", "Smith", "12345678912");
             BigDecimal initialBalance = BigDecimal.valueOf(100);
             account.deposit(initialBalance);
 
@@ -39,7 +39,7 @@ class BankManagementTest {
             PrintStream originalOut = System.out;
             System.setOut(new PrintStream(outputStream));
 
-            BankManagement.Account account = new BankManagement.Account("Alice", "12345678912");
+            BankManagement.Account account = new BankManagement.Account("Alice", "Smith", "12345678912");
             BigDecimal initialBalance = BigDecimal.valueOf(-100);
             account.deposit(initialBalance);
 
@@ -55,7 +55,7 @@ class BankManagementTest {
         @Test
         @DisplayName("Validar conta com saldo suficiente quando realizar saque o saldo deve diminuir")
         void givenAccountWithSufficientBalance_whenWithdrawValidAmount_thenBalanceDecreases() {
-            BankManagement.Account account = new BankManagement.Account("Charlie", "45678912345");
+            BankManagement.Account account = new BankManagement.Account("Charlie", "Doe", "45678912345");
             BigDecimal initialBalance = BigDecimal.valueOf(300);
             account.deposit(initialBalance);
 
@@ -73,7 +73,7 @@ class BankManagementTest {
             PrintStream originalOut = System.out;
             System.setOut(new PrintStream(outputStream));
 
-            BankManagement.Account account = new BankManagement.Account("David", "78912345678");
+            BankManagement.Account account = new BankManagement.Account("David", "Bowie", "78912345678");
             BigDecimal initialBalance = BigDecimal.valueOf(400);
             account.deposit(initialBalance);
 
@@ -92,13 +92,14 @@ class BankManagementTest {
         @Test
         @DisplayName("Validar retorno do método toString()")
         void givenAccount_whenToStringCalled_thenReturnsExpectedFormat() {
-            BankManagement.Account account = new BankManagement.Account("Frank", "55566677700");
+            BankManagement.Account account = new BankManagement.Account("Frank", "Sinatra", "55566677700");
 
             String accountInfo = account.toString();
 
             String expectedInfo = String.format(
-                    "{ %n \"name\": \"%s\",%n \"cpf\": \"%s\",%n \"balance\": %s %n}",
+                    "{ %n \"name\": \"%s\",%n \"lastname\": \"%s\", %n \"cpf\": \"%s\",%n \"balance\": %s %n}",
                     account.getName(),
+                    account.getLastname(),
                     account.getCpf(),
                     account.getBalance()
             );
